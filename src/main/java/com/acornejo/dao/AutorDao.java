@@ -5,6 +5,7 @@ import com.mongodb.WriteResult;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.UnknownHostException;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class AutorDao {
     private static AutorDao INSTANCE = null;
 
-
+    @Autowired
     private Datastore datastore;
 
     private AutorDao() {

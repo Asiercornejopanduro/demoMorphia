@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
+/**
+ * Controller to manage the libros collection
+ */
 @Controller
 @RequestMapping("/libros")
 public class LibroController {
@@ -27,7 +30,11 @@ public class LibroController {
 
     }
 
-
+    /**
+     * Gets a list of authors storaged on the "libros" collection from "biblioteca" database.
+     *
+     * @return ResponseEntity object with all the libros documents on the collection JSON formatted, and the http status code,Ok if the operation was succesfully or NOT FOUND if not.
+     */
     @RequestMapping(value = "/listado", method = RequestMethod.GET)
     public ResponseEntity<Object> getAll() {
         List<Libro> libros = libroService.getAll();
@@ -46,6 +53,12 @@ public class LibroController {
 
     }
 
+    /**
+     * Gets a libro specified by the id parameter wich indicates the resource location.
+     *
+     * @param id String objectId for the libro who want to return.
+     * @return ResponseEntity object with Libro object finded on the collection and the http status code,Ok if the operation was succesfully or NOT FOUND if not.
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getById(@PathVariable String id) {
         Libro libro;
@@ -59,6 +72,12 @@ public class LibroController {
 
     }
 
+    /**
+     * Insert a new libro on the database, specified by the libro JSON formatted object sended on the request.
+     *
+     * @param libro Libro object JSON formatted wich want to insert on the collection.
+     * @return ResponseEntity object the new libro inserted on the collection, and the http status code,CREATED if the operation was succesfully or CONFLICT if not.
+     */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Object> crear(@RequestBody Libro libro) {
         ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -70,6 +89,12 @@ public class LibroController {
 
     }
 
+    /**
+     * Deletes the Libro specified by the JSON formatted Libro object sended on the request.
+     *
+     * @param id String ObjectId of the libro wich want to delete.
+     * @return ResponseEntity object with the http status code,OK if the operation was succesfully or NOT_FOUND if not.
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> borrar(@PathVariable String id) {
         ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -82,6 +107,12 @@ public class LibroController {
         return response;
     }
 
+    /**
+     * Updates the Libro object sprecified by the JSON formatted Libro object sended on the request.
+     *
+     * @param libro JSON formatted Libro object wich specify the document to update, with the updated values.
+     * @return ResponseEntity object with the libro modified on the collection, and the http status code,OK if the operation was succesfully or NOT_FOUND if not.
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Object> update(@RequestBody Libro libro) {
 

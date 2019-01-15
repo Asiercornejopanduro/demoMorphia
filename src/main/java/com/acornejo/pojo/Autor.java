@@ -16,6 +16,7 @@ import java.util.List;
 
 @Entity(value = "autores", noClassnameStored = true)
 public class Autor {
+    //Atributes
     @Id
     @JsonSerialize(using = NoObjectIdSerializer.class)
     private ObjectId id;
@@ -28,43 +29,90 @@ public class Autor {
     @Property("publicaciones")
     private List<Libro> libros;
 
+    //Cosntructors
+
+    /**
+     * Class Constructor
+     */
     private Autor() {
         super();
         this.nombre = "";
 
     }
 
-    public Autor(String nombre) {
+    /**
+     * Class constructor specifying the name and his books.
+     *
+     * @param nombre String name of the author.
+     * @param libros ArrayList list of books writen by the author
+     */
+    public Autor(String nombre, ArrayList<Libro> libros) {
         this();
         this.nombre = nombre;
-        this.libros = new ArrayList<>();
+        this.libros = libros;
     }
 
+    //Methods
 
+    /**
+     * Gets the author objectId from the document
+     *
+     * @return the author ObjectId
+     */
     public ObjectId getId() {
         return id;
     }
 
+    /**
+     * Sets the author ObjectId specified by the id parameter.
+     *
+     * @param id ObjectId updated Objectid for the author.
+     */
     public void setId(ObjectId id) {
         this.id = id;
     }
 
+    /**
+     * Gets author name.
+     *
+     * @return String Author name.
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     * Sets the author name specified by the nombre parameter.
+     *
+     * @param nombre String Updated author name.
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     * Gets a list of books writen by the author.
+     *
+     * @return Arraylist of books writen by the author.
+     */
     public List<Libro> getLibros() {
         return libros;
     }
 
+    /**
+     * Sets the list of books wirten by the author.
+     *
+     * @param libros List of books wich want to add to the writen books list by the author.
+     */
     public void setLibros(List<Libro> libros) {
         this.libros = libros;
     }
 
+    /**
+     * Shows a entire description for the author.
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Autor{" +

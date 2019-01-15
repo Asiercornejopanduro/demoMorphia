@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.UpdateResults;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -13,6 +14,7 @@ public class LibroDao {
     private static LibroDao INSTANCE = null;
     private List<Libro> libros = null;
     private static LibroDao libroDao = null;
+    @Autowired
     private Datastore datastore;
     private Key<Libro> libroId = null;
 

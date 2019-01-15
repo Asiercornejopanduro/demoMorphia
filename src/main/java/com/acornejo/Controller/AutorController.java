@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import java.net.UnknownHostException;
 import java.util.List;
 
+/**
+ * Controller to manage the autores collection
+ */
 @Controller
 @RequestMapping("/autores")
 public class AutorController {
     private ServiceAutorImpl autorService;
+
 
     public AutorController() throws UnknownHostException {
 
@@ -28,6 +32,11 @@ public class AutorController {
 
     }
 
+    /**
+     * Gets a list of autores storaged on the "autores" collection from "biblioteca" database.
+     *
+     * @return ResponseEntity object with all the authors documents on the collection, and the http status code,Ok if the operation was succesfully or NOT FOUND if not.
+     */
     @RequestMapping(value = "/listado", method = RequestMethod.GET)
     public ResponseEntity<Object> getAll() {
         List<Autor> autores = autorService.getAll();
@@ -46,6 +55,12 @@ public class AutorController {
 
     }
 
+    /**
+     * Gets a author specified by the id parameter wich indicates the resource location.
+     *
+     * @param id String objectId for the author who want to return.
+     * @return ResponseEntity object with Author object finded on the collection and the http status code,Ok if the operation was succesfully or NOT FOUND if not.
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Object> getById(@PathVariable String id) {
         Autor autor;
@@ -59,6 +74,12 @@ public class AutorController {
 
     }
 
+    /**
+     * Insert a new Autor on the database, specified by the author JSON formatted object sended on the request.
+     *
+     * @param autor Autor object JSON formatted wich want to insert on the collection.
+     * @return ResponseEntity object the new autor inserted on the collection, and the http status code,CREATED if the operation was succesfully or CONFLICT if not.
+     */
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Object> crear(@RequestBody Autor autor) {
         ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -70,18 +91,30 @@ public class AutorController {
 
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    /**
+     * Deletes the Autor specified by the JSON formatted Author object sended on the request.
+     *
+     * @param autor JSON formatted Autor object wich want to delete from the collection.
+     * @return ResponseEntity object with the http status code,OK if the operation was succesfully or NOT_FOUND if not.
+     */
+    @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity<Object> borrar(@RequestBody Autor autor) {
         ResponseEntity<Object> response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
         WriteResult wr = autorService.delete(autor);
         if (wr.getN() == 1) {
             response = new ResponseEntity<>(HttpStatus.OK);
-        }
 
+        }
 
         return response;
     }
 
+    /**
+     * Updates the Autor object sprecified by the JSON formatted Autor object sended on the request.
+     *
+     * @param autor JSON formatted Autor object wich specify the document to update.
+     * @return ResponseEntity object the autor modified on the collection, and the http status code,OK if the operation was succesfully or NOT_FOUND if not.
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Object> update(@RequestBody Autor autor) {
 
